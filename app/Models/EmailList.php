@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmailList extends Model
 {
-    //
+    protected $attributes = [
+        'name'
+    ];
 }
