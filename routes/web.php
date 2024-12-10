@@ -24,6 +24,7 @@ Volt::route('/signup', 'auth.signup')->name('auth.signup');
 
 
 Route::middleware('auth')->group(function () {
+    Volt::route('/greeting/{user}', 'users.greeting')->name('users.greeting');
     # blacklists
     Volt::route('/blacklists', 'blacklists.index')->name('blacklists.index');
     Volt::route('/blacklists/create', 'blacklists.create')->name('blacklists.create');
