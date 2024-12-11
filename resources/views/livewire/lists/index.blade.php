@@ -21,7 +21,9 @@ new class extends Component {
 
     public function delete($id)
     {
-        dd($id);
+        EmailList::query()
+            ->where("id", "=", $id)
+            ->delete();
     }
 
 }; ?>
@@ -48,7 +50,7 @@ new class extends Component {
         <x-button link="lists/create" label="Create" class="btn-primary ml-auto"></x-button>
     </div>
 
-    <x-table :headers="$headers" :rows="$emails" @row-click="alert($event.detail.name)" with-pagination>
+    <x-table :headers="$headers" :rows="$emails" with-pagination>
 
         <x-slot:empty>
             <x-icon name="fas.address-book" label="It is empty."/>
@@ -56,7 +58,7 @@ new class extends Component {
 
         @scope('actions', $email)
         <div class="flex-initial flex gap-2">
-            <x-button icon="fas.trash-can" wire:click="delete({{ $email->id }})" spinner class="btn-sm"/>
+            <x-button icon="fas.trash-can" wire:click="delete({{ $email->id }})" spinner class="btn-sm btn-primary"/>
             <x-button icon="fas.pen-to-square" link="lists/{{$email->id}}/edit" spinner class="btn-sm"/>
         </div>
         @endscope
