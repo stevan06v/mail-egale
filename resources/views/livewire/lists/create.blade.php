@@ -42,8 +42,7 @@ new class extends Component {
                 "name" => $this->name
             ]
         );
-
-        $this->file->store('csv_data');
+        $this->file->store("csv_data");
 
         $email_entries = Reader::createFromPath($this->file->path(), 'r');
         $email_entries->setHeaderOffset(0);
@@ -73,7 +72,15 @@ new class extends Component {
 
         $this->emails = $email_list->email_entries()->get()->toArray();
 
+        File::delete($this->file->path());
+
         $this->success("Successfully created the list!", position: 'toast-bottom toast-right');
+    }
+
+
+    public function load_csv()
+    {
+
     }
 
 
@@ -90,8 +97,8 @@ new class extends Component {
     @php
         $headers = [
             ['key' => 'id', 'label' => '#'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'email', 'label' => 'Email']
+            ['key' => 'email', 'label' => 'Email'],
+            ['key' => 'name', 'label' => 'Name']
             ];
 
     @endphp
@@ -110,11 +117,13 @@ new class extends Component {
         </x-slot:actions>
     </x-form>
 
-    <x-table :headers="$headers" :rows="$emails">
-        <x-slot:empty>
-            <x-icon name="fas.person" label="It is empty."/>
-        </x-slot:empty>
-    </x-table>
+    <x-header title="List Entries" size="text-xl"  subtitle="Your imported CSV-data.">   </x-header>
+        <x-table :headers="$headers" :rows="$emails" wire:poll>
+            <x-slot:empty>
+                <x-icon name="fas.person" label="It is empty."/>
+            </x-slot:empty>
+        </x-table>
+
 
     <x-toast position="toast-bottom toast-right " />
 </div>

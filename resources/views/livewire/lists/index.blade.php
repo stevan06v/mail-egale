@@ -58,8 +58,9 @@ new class extends Component {
 
         @scope('actions', $email)
         <div class="flex-initial flex gap-2">
-            <x-button icon="fas.trash-can" wire:click="delete({{ $email->id }})" spinner class="btn-sm btn-primary"/>
+            <x-button icon="fas.eye" link="lists/{{$email->id}}/show" spinner class="btn-sm"/>
             <x-button icon="fas.pen-to-square" link="lists/{{$email->id}}/edit" spinner class="btn-sm"/>
+            <x-button icon="fas.trash-can" wire:click="delete({{ $email->id }})" spinner class="btn-sm btn-primary"/>
         </div>
         @endscope
 
