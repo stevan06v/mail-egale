@@ -30,7 +30,7 @@ new class extends Component {
 
         Auth::login($user);
 
-        return redirect('/lists')->with('success', 'Account created successfully!');
+        return redirect('/greeting/'.$user->id)->with('success', 'Account created successfully!');
     }
 
 }; ?>

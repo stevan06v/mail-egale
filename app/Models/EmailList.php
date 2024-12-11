@@ -3,10 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EmailList extends Model
 {
-    protected $attributes = [
+    protected $fillable = [
         'name'
     ];
+
+    public function email_entries(): HasMany
+    {
+        return $this->hasMany(EmailEntry::class);
+    }
 }

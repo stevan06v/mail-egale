@@ -32,10 +32,11 @@ Route::middleware('auth')->group(function () {
     Volt::route('/blacklists/{blacklist}/edit', 'blacklists.edit')->name('blacklists.edit');
 
     # jobs
-    Volt::route('/jobs', 'jobs.index')->name('jobs.index');
-    Volt::route('/jobs/create', 'jobs.create')->name('jobs.create');
-    Volt::route('/jobs/{job}', 'jobs.show')->name('jobs.show');
-    Volt::route('/jobs/{job}/edit', 'jobs.edit')->name('jobs.edit');
+    Volt::route('/campaigns', 'campaigns.index')->name('campaigns.index');
+    Volt::route('/campaigns/create', 'campaigns.create')->name('campaigns.create');
+    Volt::route('/campaigns/{campaign}', 'campaigns.show')->name('campaigns.show');
+    Volt::route('/campaigns/{campaign}/edit', 'campaigns.edit')->name('campaigns.edit');
+    Volt::route('/campaigns/stats', 'campaigns.stats.index')->name('campaigns.stats.index');
 
     # lists
     Volt::route('/lists', 'lists.index')->name('lists.index');

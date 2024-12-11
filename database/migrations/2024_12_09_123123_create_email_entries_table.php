@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('email_entries', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->foreignId('email_list_id')->constrained('email_lists');
+
             $table->timestamps();
         });
     }

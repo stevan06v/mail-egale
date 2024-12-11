@@ -1,10 +1,14 @@
 <?php
 
 use App\Models\EmailList;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
+use Livewire\WithPagination;
 
 new class extends Component {
+    use WithPagination;
+
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
     public ?Collection $emails;
 
@@ -12,9 +16,9 @@ new class extends Component {
     {
         $this->emails = EmailList::query()
             ->orderBy(...array_values($this->sortBy))
-            ->take(3)
             ->get();
     }
+
     public function delete($id)
     {
         dd($id);
@@ -26,26 +30,25 @@ new class extends Component {
 
     @php
         $emails = EmailList::query()
-            ->orderBy(...array_values($this->sortBy))
-            ->take(3)
-            ->get();
+                ->orderBy(...array_values($this->sortBy))
+                ->paginate(5);
 
-        $headers = [
-            ['key' => 'id', 'label' => '#'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'created_at', 'label' => 'Date', 'format' => ['date', 'd/m/Y'],
-            ['key'=> 'actions', 'label' => 'Actions']
-            ]
+            $headers = [
+                ['key' => 'id', 'label' => '#'],
+                ['key' => 'name', 'label' => 'Name'],
+                ['key' => 'created_at', 'label' => 'Date', 'format' => ['date', 'd/m/Y'],
+                ['key'=> 'actions', 'label' => 'Actions']
+                ]
 
-        ];
+            ];
     @endphp
-    <x-header title="Email Lists" subtitle="Manage your contacts easily!" separator/>
+    <x-header title="Contact Lists" subtitle="Manage your contacts easily!" separator/>
 
     <div class="flex">
-        <x-button link="lists/create" label="Create" class="btn-outline ml-auto"></x-button>
+        <x-button link="lists/create" label="Create" class="btn-primary ml-auto"></x-button>
     </div>
 
-    <x-table :headers="$headers" :rows="$emails" @row-click="alert($event.detail.name)">
+    <x-table :headers="$headers" :rows="$emails" @row-click="alert($event.detail.name)" with-pagination>
 
         <x-slot:empty>
             <x-icon name="fas.address-book" label="It is empty."/>
@@ -60,6 +63,7 @@ new class extends Component {
 
 
     </x-table>
+    <x-toast position="toast-bottom toast-center"/>
 
 
 </div>

@@ -49,9 +49,9 @@
             @endif
 
             <div class="opacity-90">
-                <x-menu-sub title="Jobs" icon="fas.paper-plane">
-                    <x-menu-item title="Jobs" icon="fas.paper-plane" link="/jobs"/>
-                    <x-menu-item title="Stats" icon="fas.chart-simple" link="/jobs"/>
+                <x-menu-sub title="Campaigns" icon="fas.paper-plane">
+                    <x-menu-item title="Campaigns" icon="fas.paper-plane" link="/campaigns"/>
+                    <x-menu-item title="Stats" icon="fas.chart-simple" link="/campaigns/stats"/>
                 </x-menu-sub>
 
 

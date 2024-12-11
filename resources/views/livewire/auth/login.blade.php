@@ -4,15 +4,19 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Volt\Component;
+use Mary\Traits\Toast;
 
 new class extends Component {
 
+    use Toast;
     public ?string $email;
     public ?string $password;
 
 
     public function save()
     {
+
+
         $validatedData = $this->validate([
             'email' => 'required|string|max:255',
             'password' => 'required|unique:users,email',
@@ -20,11 +24,11 @@ new class extends Component {
 
         $user = User::where("email", "=", $this->email)->first();
 
-        try {
+        if ($user) {
             Auth::login($user);
-            return Redirect::to('greeting/'. $user->id);
-        } catch (Exception $e) {
-
+            return Redirect::to('greeting/' . $user->id);
+        } else {
+            $this->error("User not found. Please sign up!", position: 'toast-bottom toast-end');
         }
     }
 
