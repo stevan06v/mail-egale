@@ -28,5 +28,5 @@ new class extends Component {
     <a href="https://websters.at/" target="_blank">
         <x-button label="Our Company"/>
     </a>
-    <x-button label="Start using" wire:click="start()" class="btn-success"/>
+    <x-button label="Start using" wire:click="start()" class="btn-primary"/>
 </div>

@@ -19,9 +19,13 @@ new class extends Component {
 
     public ?string $name;
 
+    public ?string $email_column_name;
+
+    public ?string $name_column_name;
+
     public ?Collection $email_list;
 
-    public ?array $emails=[];
+    public ?array $emails = [];
 
     public $file;
 
@@ -29,6 +33,8 @@ new class extends Component {
     {
         $validatedData = $this->validate([
             'name' => 'required|string|max:255',
+            'email_column_name' => 'required|string|max:255',
+            'name_column_name' => 'required|string|max:255'
         ]);
 
         $email_list = EmailList::create(
@@ -49,26 +55,27 @@ new class extends Component {
 
         $email_entries = [];
         foreach ($records as $record) {
-            $email_entries[] = [
-                'email_list_id' => $email_list->id,
-                'name' => $record['name'],
-                'email' => $record['email'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+            try {
+                $email_entries[] = [
+                    'email_list_id' => $email_list->id,
+                    'name' => $record[$this->name_column_name],
+                    'email' => $record[$this->email_column_name],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            } catch (Exception $err) {
+                $this->warning(title:"Check the columns-names!", position: 'toast-bottom toast-end');
+                break;
+            }
         }
 
         EmailEntry::query()->insert($email_entries);
 
         $this->emails = $email_list->email_entries()->get()->toArray();
 
-        $this->success("Successfully created entry!", position: 'toast-bottom toast-end');
+        $this->success("Successfully created the list!", position: 'toast-bottom toast-right');
     }
 
-    public function import()
-    {
-
-    }
 
     public
     function back()
@@ -81,26 +88,33 @@ new class extends Component {
 
 <div>
     @php
-           $headers = [
-               ['key' => 'id', 'label' => '#'],
-               ['key' => 'name', 'label' => 'Name'],
-               ['key' => 'email', 'label' => 'Email']
-               ];
+        $headers = [
+            ['key' => 'id', 'label' => '#'],
+            ['key' => 'name', 'label' => 'Name'],
+            ['key' => 'email', 'label' => 'Email']
+            ];
 
     @endphp
-    <x-header title="Create Contact List" subtitle="Create a list and import our contacts from a csv-file." separator/>
-        <x-form wire:submit="save">
-            <x-input label="Name" wire:model="name"/>
-            <x-file wire:model="file" label="CSV list" hint="Only CSV" accept="application/csv"/>
-            <x-slot:actions>
-                <x-button label="Back" class="btn-outline" link="/lists" wire:navigate spinner="back"/>
-                <x-button label="Create" class="btn-primary" type="submit" spinner="create"/>
-            </x-slot:actions>
-        </x-form>
+    <x-header title="Create Contact List" subtitle="Create a list and import your contacts from a csv-file." separator/>
+    <x-form wire:submit="save">
+        <x-input label="Name" wire:model="name"/>
 
-        <x-table :headers="$headers" :rows="$emails">
-            <x-slot:empty>
-                <x-icon name="fas.person" label="It is empty."/>
-            </x-slot:empty>
-        </x-table>
+        <x-input label="Email-Column Name" wire:model="name_column_name"/>
+        <x-input label="Name-Column Name" wire:model="email_column_name"/>
+
+        <x-file wire:model="file" label="CSV list" hint="Only CSV" accept="application/csv"/>
+
+        <x-slot:actions>
+            <x-button label="Back" class="btn-outline" link="/lists" wire:navigate spinner="back"/>
+            <x-button label="Create" class="btn-primary" type="submit" spinner="create"/>
+        </x-slot:actions>
+    </x-form>
+
+    <x-table :headers="$headers" :rows="$emails">
+        <x-slot:empty>
+            <x-icon name="fas.person" label="It is empty."/>
+        </x-slot:empty>
+    </x-table>
+
+    <x-toast position="toast-bottom toast-right " />
 </div>
