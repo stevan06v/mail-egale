@@ -38,10 +38,10 @@ new class extends Component {
 <div class="max-w-sm lg:ml-40">
     <x-header title="Sign Up" subtitle="Create a new account." separator/>
     <x-form wire:submit="login">
-        <x-input label="Nickname" wire:model="nickname" value="stevan06v" icon="o-envelope" inline/>
+        <x-input label="Nickname" wire:model="nickname" value="stevan06v" icon="far.user" inline/>
         <x-input label="E-mail" wire:model="email" value="random@random.com" icon="o-envelope" inline email/>
-        <x-input label="Password" wire:model="password" value="random" type="password" icon="o-key" inline/>
-        <x-input label="Retype Password" wire:model="password_confirmation" value="random" type="password" icon="o-key"
+        <x-password label="Password" wire:model="password" value="random" type="password"  inline/>
+        <x-password label="Retype Password" wire:model="password_confirmation" value="random" type="password"
                  inline/>
 
         <x-slot:actions>

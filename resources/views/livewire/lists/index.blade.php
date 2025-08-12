@@ -1,48 +1,46 @@
 <?php
 
 use App\Models\EmailList;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-
 new class extends Component {
-    use WithPagination;
 
-    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
-    public ?Collection $emails;
+ #   use WithPagination;
+
+  #  public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
+
+   /* public $emails;
 
     public function mount()
     {
-        $this->emails = EmailList::query()
+       /* $this->emails = User::findOrFail(Auth::id())
+            ->email_lists()
             ->orderBy(...array_values($this->sortBy))
-            ->get();
+            ->paginate(5);
     }
-
-    public function delete($id)
+*/
+   /* public function delete($id)
     {
-        EmailList::query()
-            ->where("id", "=", $id)
-            ->delete();
-    }
+        EmailList::where('id', $id)->delete();
+    }*/
 
-}; ?>
+};?>
 
 <div>
 
     @php
-        $emails = EmailList::query()
-                ->orderBy(...array_values($this->sortBy))
-                ->paginate(5);
+        $emails = User::query()
+                 #   ->orderBy(...array_values($this->sortBy))
+                    ->paginate(5);
 
-            $headers = [
-                ['key' => 'id', 'label' => '#'],
-                ['key' => 'name', 'label' => 'Name'],
-                ['key' => 'created_at', 'label' => 'Date', 'format' => ['date', 'd/m/Y'],
-                ['key'=> 'actions', 'label' => 'Actions']
-                ]
-
-            ];
+                    $headers = [
+                            ['key' => 'id', 'label' => '#'],
+                            ['key' => 'name', 'label' => 'Name'],
+                            ['key' => 'actions', 'label' => 'Actions']
+                    ];
     @endphp
     <x-header title="Contact Lists" subtitle="Manage your contacts easily!" separator/>
 
@@ -57,16 +55,12 @@ new class extends Component {
         </x-slot:empty>
 
         @scope('actions', $email)
-        <div class="flex-initial flex gap-2">
-            <x-button icon="fas.eye" link="lists/{{$email->id}}/show" spinner class="btn-sm"/>
-            <x-button icon="fas.pen-to-square" link="lists/{{$email->id}}/edit" spinner class="btn-sm"/>
-            <x-button icon="fas.trash-can" wire:click="delete({{ $email->id }})" spinner class="btn-sm btn-primary"/>
-        </div>
+            <div class="flex-initial flex gap-2">
+                <x-button icon="fas.eye" link="lists/{{$email->id}}/show" spinner class="btn-sm"/>
+                <x-button icon="fas.pen-to-square" link="lists/{{$email->id}}/edit" spinner class="btn-sm"/>
+                <x-button icon="fas.trash-can" wire:click="delete({{$email->id}})" spinner class="btn-sm btn-primary"/>
+            </div>
         @endscope
-
-
     </x-table>
     <x-toast position="toast-bottom toast-center"/>
-
-
 </div>

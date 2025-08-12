@@ -3,20 +3,20 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 use Mary\Traits\Toast;
 
-new class extends Component {
+new
+class extends Component {
 
     use Toast;
+
     public ?string $email;
     public ?string $password;
 
-
     public function save()
     {
-
-
         $validatedData = $this->validate([
             'email' => 'required|string|max:255',
             'password' => 'required|unique:users,email',
@@ -40,7 +40,7 @@ new class extends Component {
     <x-header title="Login" subtitle="Login into your existing account." separator/>
     <x-form wire:submit="login">
         <x-input label="E-mail" wire:model="email" value="random@random.com" icon="o-envelope" inline/>
-        <x-input label="Password" wire:model="password" value="random" type="password" icon="o-key" inline/>
+        <x-password label="Password" wire:model="password" value="random" type="password" inline/>
 
         <x-slot:actions>
             <x-button label="Sign up" link="/signup" icon="fas.user-plus" class="btn-primary" spinner="signup"/>

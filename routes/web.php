@@ -41,8 +41,9 @@ Route::middleware('auth')->group(function () {
     # lists
     Volt::route('/lists', 'lists.index')->name('lists.index');
     Volt::route('/lists/create', 'lists.create')->name('lists.create');
-    Volt::route('/lists/{list}', 'lists.show')->name('lists.show');
-    Volt::route('/lists/{list}/edit', 'lists.edit')->name('lists.edit');
+    Volt::route('/lists/{id}/edit', 'lists.edit')->name('lists.edit');
+    Volt::route('/lists/{id}', 'lists.show')->name('lists.show');
+
 
     # profiles
     Volt::route('/templates', 'templates.index')->name('templates.index');

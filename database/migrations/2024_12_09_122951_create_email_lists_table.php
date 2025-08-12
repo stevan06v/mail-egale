@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,10 @@ return new class extends Migration
         Schema::create('email_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email_column_name');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('name_column_name');
+            $table->string('column_delimiter',2);
             $table->timestamps();
         });
     }
@@ -25,4 +30,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('email_lists');
     }
+
+
 };
