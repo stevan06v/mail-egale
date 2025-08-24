@@ -48,13 +48,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-
     public function email_configurations(): HasMany {
         return $this->hasMany(EmailConfiguration::class);
     }
     public function email_lists(): HasMany {
         return $this->hasMany(EmailList::class);
+    }
+    public function email_campaigns(): HasMany {
+        return $this->hasMany(EmailCampaign::class);
+    }
+    public function email_templates(): HasMany {
+        return $this->hasMany(EmailTemplate::class);
     }
 
 }

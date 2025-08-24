@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->mediumText('html');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

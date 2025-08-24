@@ -7,39 +7,39 @@ use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 new class extends Component {
+    use WithPagination;
 
- #   use WithPagination;
+    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
-  #  public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
-
-   /* public $emails;
+    public $emails;
 
     public function mount()
     {
        /* $this->emails = User::findOrFail(Auth::id())
             ->email_lists()
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(5);
+            ->paginate(5);*/
     }
-*/
-   /* public function delete($id)
+
+    public function delete($id)
     {
-        EmailList::where('id', $id)->delete();
-    }*/
+        EmailList::where('id', '=', $id)->delete();
+    }
 
 };?>
 
 <div>
 
     @php
-        $emails = User::query()
-                 #   ->orderBy(...array_values($this->sortBy))
-                    ->paginate(5);
+        $email_lists = User::findOrFail(Auth::id())
+            ->email_lists()
+            ->orderBy(...array_values($this->sortBy))
+            ->paginate(5);
 
                     $headers = [
                             ['key' => 'id', 'label' => '#'],
                             ['key' => 'name', 'label' => 'Name'],
-                            ['key' => 'actions', 'label' => 'Actions']
+                            ['key' => 'actions', 'label' => '']
                     ];
     @endphp
     <x-header title="Contact Lists" subtitle="Manage your contacts easily!" separator/>
@@ -48,7 +48,7 @@ new class extends Component {
         <x-button link="lists/create" label="Create" class="btn-primary ml-auto"></x-button>
     </div>
 
-    <x-table :headers="$headers" :rows="$emails" with-pagination>
+    <x-table with-pagination :headers="$headers" :rows="$email_lists">
 
         <x-slot:empty>
             <x-icon name="fas.address-book" label="It is empty."/>
@@ -56,7 +56,7 @@ new class extends Component {
 
         @scope('actions', $email)
             <div class="flex-initial flex gap-2">
-                <x-button icon="fas.eye" link="lists/{{$email->id}}/show" spinner class="btn-sm"/>
+                <x-button icon="fas.eye" link="lists/{{$email->id}}" spinner class="btn-sm"/>
                 <x-button icon="fas.pen-to-square" link="lists/{{$email->id}}/edit" spinner class="btn-sm"/>
                 <x-button icon="fas.trash-can" wire:click="delete({{$email->id}})" spinner class="btn-sm btn-primary"/>
             </div>

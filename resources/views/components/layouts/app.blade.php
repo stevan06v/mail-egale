@@ -54,16 +54,11 @@
                     <x-menu-item title="Stats" icon="fas.chart-simple" link="/campaigns/stats"/>
                 </x-menu-sub>
 
-
                 <x-menu-item title="Lists" icon="fas.address-book" link="/lists"/>
                 <x-menu-item title="Templates" icon="fas.paint-roller" link="/templates"/>
                 <x-menu-item title="Blacklists" icon="fas.ghost" link="/blacklists"/>
                 <x-menu-item title="Profiles" icon="fas.screwdriver-wrench" link="/profiles"/>
-                <x-menu-sub title="Users" icon="fas.paper-plane">
-                     <x-menu-item title="Users" icon="fas.users" link="/users"/>
-                    <x-menu-item title="Greeting" icon="fas.hand-sparkles" link="/greeting/{{auth()->id()}}"/>
-                </x-menu-sub>
-                <x-menu-item title="Plans" icon="fas.money-check" link="/plans"/>
+                <x-menu-item title="Forms" icon="fas.money-check" link="/plans"/>
             </div>
 
         </x-menu>

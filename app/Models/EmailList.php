@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EmailList extends Model
@@ -11,7 +12,6 @@ class EmailList extends Model
     protected $fillable = [
         'name',
         'email_column_name',
-        'name_column_name',
         'column_delimiter',
         'user_id'
     ];
@@ -24,4 +24,5 @@ class EmailList extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }

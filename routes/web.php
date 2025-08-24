@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Volt::route('/campaigns', 'campaigns.index')->name('campaigns.index');
     Volt::route('/campaigns/create', 'campaigns.create')->name('campaigns.create');
     Volt::route('/campaigns/{campaign}', 'campaigns.show')->name('campaigns.show');
+    Volt::route('/campaigns/{campaign}/stats', 'campaigns.stats.show')->name('campaigns.stats.show');
     Volt::route('/campaigns/{campaign}/edit', 'campaigns.edit')->name('campaigns.edit');
     Volt::route('/campaigns/stats', 'campaigns.stats.index')->name('campaigns.stats.index');
 

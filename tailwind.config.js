@@ -22,7 +22,7 @@ export default {
 		require("daisyui")
 	],
     daisyui: {
-        themes: ["light", "dark", "winter"],
+        themes: ["winter", "dark", "light"],
     },
 
 };

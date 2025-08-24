@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EmailConfiguration extends Model
 {
@@ -21,5 +22,10 @@ class EmailConfiguration extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function email_campaigns(): HasMany
+    {
+        return $this->hasMany(EmailCampaign::class);
     }
 }

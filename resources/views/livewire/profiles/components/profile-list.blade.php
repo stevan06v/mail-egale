@@ -28,7 +28,7 @@ new class extends Component {
         ];
     @endphp
 
-    <x-header title="Create Email-Profiles" subtitle="Manage profiles easily!" separator/>
+    <x-header title="Create Email-Profiles" subtitle="Manage your profiles easily!" separator/>
 
     <div class="flex">
         <x-button link="profiles/create" label="Create" class="btn-primary ml-auto"></x-button>

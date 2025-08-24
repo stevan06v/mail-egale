@@ -45,21 +45,15 @@ new class extends Component {
             ->where("email_list_id", "=", $this->email_list->id)
             ->delete();
 
-        // need to update list entries too
         $this->success("Successfully updated the list!", position: 'toast-bottom toast-right');
     }
 
 }; ?>
 
 <div>
-    @php
-        $headers = [
-            ['key' => 'id', 'label' => '#'],
-            ['key' => 'email', 'label' => 'Email'],
-            ['key' => 'name', 'label' => 'Name']
-            ];
-    @endphp
     <x-header title="Edit Contact List" subtitle="Update a list and import your contacts from a csv-file." separator/>
+    <x-tabs wire:model="selectedTab">
+        <x-tab name="general-tab" label="General" icon="o-users">
     <x-form wire:submit="save">
         <x-input label="Name" wire:model="name"/>
 
@@ -77,14 +71,12 @@ new class extends Component {
             <x-button label="Update" class="btn-primary" type="submit" spinner="update"/>
         </x-slot:actions>
     </x-form>
+        </x-tab>
+        <x-tab name="tricks-tab" label="Extras" icon="o-sparkles">
+            <div>Extras</div>
+        </x-tab>
 
-    <x-header title="List Entries" size="text-xl"
-              subtitle="Your imported CSV-data.  (Limited to 10 entries)"></x-header>
-    <x-table :headers="$headers" :rows="$emails">
-        <x-slot:empty>
-            <x-icon name="fas.person" label="It is empty."/>
-        </x-slot:empty>
-    </x-table>
+    </x-tabs>
 
 
     <x-toast position="toast-bottom toast-right "/>
